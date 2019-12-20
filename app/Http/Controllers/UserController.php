@@ -7,15 +7,27 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource. 
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
-        return view('users.index', ['users' => $users]);
+        if($request) {
+            $query = trim($request->get('search'));
+            $users = User::where('name', 'LIKE', '%'.$query.'%')->orderBy('id', 'asc')->paginate(5);
+            return view('users.index', ['users' => $users, 'search' => $query]);
+        } // else {
+        //     $users = User::all();
+        //     return view('users.index', ['users' => $users]);
+        // }
+
+        
     }
 
     /**

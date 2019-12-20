@@ -3,6 +3,13 @@
 @section('content')
 <div class="container">
     <h3>List user <a class="btn btn-primary float-right btn-sm" href="users/create" role="button">Add</a></h3>
+    <h6>
+        @if ($search)
+            <div class="alert alert-primary" role="alert">
+            The results for your search <strong>{{ $search }}</strong> are:
+            </div>
+        @endif
+    </h6>
     <table class="table">
         <thead>
             <tr>
@@ -34,5 +41,6 @@
             
         </tbody>
     </table>
+    {{ $users->links() }}
 </div>
 @endsection
